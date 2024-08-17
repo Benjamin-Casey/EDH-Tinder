@@ -1,3 +1,5 @@
+import RandomCommander from './components/RandomCommander.js';
+
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
@@ -13,11 +15,7 @@ function App() {
       {/* Create a tab for commanders that have been liked */}
       <Tabs className="mb-3">
         <Tab eventKey="random-commander" title="Random Commander">
-          {/* TODO: import component, - move code for commander etc into a new file*/}
-            <h2>Pard:</h2>
-            <Card style={{ width: '18rem' }}>
-              <Card.Img variant="top" src="holder.js/100px180" />
-            </Card>
+          <RandomCommander />            
         </Tab>
         <Tab eventKey="saved-commanders" title="Saved Commanders">
           <h2>Here's tab 2</h2>
