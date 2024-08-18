@@ -3,16 +3,13 @@ import { useEffect, useState } from 'react';
 import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/esm/Button";
 
-function addToLikedCommanders() {
-  // TODO
-}
 
 function CommanderPane() {
   const [commanderData, setCommanderData] = useState(null); // initialize with null
 
   // On page load
   useEffect(() => {
-    const fetchData = async () => {
+    const initializeCommander = async () => {
       try {
         const response = await axios.get('https://api.scryfall.com/cards/random?q=is%3Acommander');
         setCommanderData(response.data);
@@ -21,11 +18,37 @@ function CommanderPane() {
       }
     };
 
-    // fetchData();
-
-    console.log("Got commander data:");
-    console.log(commanderData);
+    // initializeCommander();
   }, []);
+
+  const newCommander = async () => {
+    try {
+      const response = await axios.get('https://api.scryfall.com/cards/random?q=is%3Acommander');
+      setCommanderData(response.data);
+    } catch (error) {
+      console.error('Error fetching commander data: ', error);
+    }
+  }
+
+  // Do nothing for now
+  const dislikeCommander = async () => {
+
+    newCommander();
+  }
+
+  // Add commander to saved commanders in database
+  const likeCommander = async () => {
+    // Make post request to back-end with commander data to save
+    axios.post('http://localhost:8080/saveCommander', commanderData)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+    newCommander();
+  }
 
   return (
     <Container>
@@ -38,8 +61,8 @@ function CommanderPane() {
           On dislike, just get new commander.
           On like, add to database to display on the new tab page.
       */}
-      <Button onClick={getNewCommander} variant="danger">Dislike</Button>{' '}
-      <Button onClick={addToLikedCommanders} variant="success">Like</Button>{' '}
+      <Button onClick={dislikeCommander} variant="danger">Dislike</Button>{' '}
+      <Button onClick={likeCommander} variant="success">Like</Button>{' '}
     </Container>
   );
 }

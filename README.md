@@ -21,3 +21,7 @@ Get random commanders (images taken from scryfall) and accept or decline them.
     - Stored locally in memory
 - SQLite database tracks commanders that the user has seen or not
   
+
+  # To do:
+
+- Set up database for saved commanders
